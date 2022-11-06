@@ -1,6 +1,14 @@
+const inteligente = async (img) => {
+    await delay(1000);
+    mover(img)
+}
 
-function mover(event){
-    const imagen = event.currentTarget;
+const normal = function(event){
+    mover(event.currentTarget)
+}
+
+
+function mover(imagen){
     const lugarO = imagen.parentNode;
     const xPos = parseInt(lugarO.dataset.x);
     const yPos = parseInt(lugarO.dataset.y);
@@ -22,6 +30,7 @@ function mover(event){
     lugarN.appendChild(lugarO.querySelector('img'))
     lugarN.querySelector('img').addEventListener('click', mover)
     lugarO.innerHTML='';
+    console.table(tablero)
 }
 
 function findEmpty(lugares){
@@ -42,9 +51,16 @@ function findEmpty(lugares){
     return -1;
 }
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const fichas = document.querySelectorAll('#grid div');
-const tablero = [
+let tablero = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,0]
+];
+
+const resuelto = [
     [1,2,3],
     [4,5,6],
     [7,8,0]
@@ -55,5 +71,5 @@ for (const ficha of fichas) {
     if(image ==null){
         continue;
     }
-    image.addEventListener('click', mover);
+    image.addEventListener('click', normal);
 }
