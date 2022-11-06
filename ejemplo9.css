@@ -1,0 +1,199 @@
+:root{
+  --grid-size: 35vw;
+  --margin-size: 1em;
+  --square-size: calc((var(--grid-size)/3) - var(--margin-size))
+}
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Abel', serif;
+  font-style: normal;
+  width: 100vw;
+  align-items: center;
+  background: url('assets/imgs/52e07824baa00f4f5b4b26ee4392db55.jpg') no-repeat;
+  background-size: cover;
+}
+
+
+
+/*Header*/
+header{
+  height: 10vh;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  box-shadow: 0.3em 0.3em 1em rgba(0,0,0,0.3);
+  position: absolute;
+}
+
+.logo--UPIIT{
+  display: flex;
+  width: 25%;
+  justify-content: center;
+}
+
+.logo--IPN{
+  display: flex;
+  width: 25%;
+  justify-content: center;
+}
+
+.titulo--contenedor{
+  display: flex;
+  font-size: 1.7rem;
+  color:#75003E;
+  justify-content: center;
+  width: 50%;
+  text-align: center;
+  align-items: center;
+  
+}
+
+.img--whidt img{
+  max-height: 13em;
+  max-width: 13em;
+  
+  align-items: center;
+}
+
+.img--whidt--IPN img{
+  max-height: 12em;
+  max-width: 12em;
+  align-items: center;
+}
+
+main{
+  display: flex;
+  padding-top: 10vh;
+  flex-wrap: wrap;
+}
+
+.container--main{
+  display: flex;
+  flex-wrap: wrap;
+  width: 70%;
+  justify-content: center;
+}
+
+aside{
+  width:30%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 88vh;
+  background-color: white;
+}
+
+#grid {
+  align-content: space-between;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: var(--grid-size);
+  width: var(--grid-size);
+  align-self: center;
+  max-width: 1250px;
+}
+
+#grid div {
+  background-color: #75003E;
+  height: var(--square-size);
+  width: var(--square-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 9px 6px 13px rgba(0, 0, 0, 0.25);
+  margin-top: 0.2em;
+}
+
+#grid div img {
+  width: 100%;
+}
+
+#results {
+  height: 4rem;
+  width: 100%;
+  text-align: center;
+  font-size: 1.9rem;
+}
+
+.info--total{
+  
+  padding: 2em;
+}
+
+.info--total h2{
+  font-size: 2rem;
+  padding: 0.5em 0;
+}
+
+.info--total p{
+  font-size: 1.2rem;
+  padding: 0.5em 0;
+}
+
+
+.botones--gato{
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em;
+  height: 4rem;
+  width: 100%;
+}
+
+.botones--gato button{
+  padding: 0.5em 1.2em;
+  font-size: 1.7rem;
+  color: white;
+  width: 900%;
+  font-family: 'Abel', serif;
+  font-style: normal;
+  background: #75003E;
+  box-shadow: 9px 6px 13px rgba(0, 0, 0, 0.25);
+  border-radius: 115px;
+  border: none;
+  max-width: 10em;
+}
+
+.botones--gato button:hover{
+  transition: all .4s;
+  background-color: #ffffff;
+  color: #75003E;
+}
+
+.text--instagram{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  align-self: flex-end;
+  color: #75003E;
+}
+
+.text--instagram h2{
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0 0.2em;
+}
+
+
+@media (max-width: 1200px) {
+  :root{
+    --grid-size: 80vw;
+  }
+  .container--main {
+    width: 100%;
+    height: auto;
+  }
+  aside{
+    width:100%;
+    height: auto;
+  }
+}
