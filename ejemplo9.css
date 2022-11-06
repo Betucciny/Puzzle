@@ -100,7 +100,7 @@ aside{
 }
 
 #grid div {
-  background-color: #75003E;
+  background-image: linear-gradient(175deg, #94092e 0, #8f083a 25%, #75003d 50%, #640034 75%, #55002f 100%);
   height: var(--square-size);
   width: var(--square-size);
   display: flex;
