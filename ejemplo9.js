@@ -1,8 +1,42 @@
 const inteligente = async () => {
     visited = [];
+    respuesta = [];
+    limite = 25;
     solved = false;
     await solve(tablero, 0);
+    console.log(respuesta)
+    await moverIA(respuesta)
+    tablero = [];
+    for(let fila of resuelto){
+        tablero.push(fila.slice())
+    }
+    const images = document.querySelectorAll('#grid div img');
+    for (const image of images) {
+        if(image ==null){
+            continue;
+        }
+        image.addEventListener('click', mover);
+    }
 }
+
+
+const moverIA= async(respuesta) =>{
+    for(let movimiento of respuesta){
+        await delay(500);
+        for(let i=0; i<movimiento.length; i++){
+            for(let j=0; j<movimiento[i].length; j++){
+                const ficha = document.querySelector('[data-x="'+ CSS.escape(i) +'"][data-y="'+ CSS.escape(j) +'"]')
+                ficha.innerHTML = "";
+                if(movimiento[i][j] === 0) continue
+                let img = document.createElement('img');
+                img.src = 'assets/imgs/pngegg (' + movimiento[i][j] + ').png';
+                ficha.appendChild(img)
+            }
+        }
+    }
+}
+
+
 
 function mover(event){
     const imagen = event.currentTarget
@@ -52,30 +86,35 @@ function findEmpty(lugares){
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const solve = async (actual, depht) =>{
-
-    if(solved === true) return
-
-    if(isIn(visited, actual) || depht > 13){
+const solve = async (actual) =>{
+    if(solved) return
+    if(isIn(visited, actual) || visited.length > limite){
         visited.push(actual);
         return;
     }
-    console.table(actual);
+    visited.push(actual);
     if(isEqual(actual, resuelto)){
-        // console.table(actual);
         console.log('aqui');
+        limite = visited.length;
+        respuesta = []
         solved = true;
+        for(let elemento of visited){
+            let temp = []
+            for(let fila of elemento){
+                temp.push(fila.slice())
+            }
+            respuesta.push(temp)
+        }
         return;
     }
 
-    visited.push(actual);
 
     let coorCero = findCero(actual);
     let hijos = generarNodos(coorCero[0], coorCero[1], actual);
 
     for(let hijo of hijos){
-        await delay(20);
-        await solve(hijo, depht+1);
+        await solve(hijo);
+        visited.pop();
     }
 }
 
@@ -128,11 +167,13 @@ function isEqual(x, y){
     return true;
 }
 
-
+let limite;
 let visited;
+let respuesta;
 let solved;
 
 const fichas = document.querySelectorAll('#grid div');
+const images = document.querySelectorAll('#grid div img');
 let tablero = [
     [1,2,3],
     [4,5,6],
@@ -148,8 +189,7 @@ const resuelto = [
 const button = document.getElementById('Resolver');
 button.addEventListener('click', inteligente);
 
-for (const ficha of fichas) {
-    const image = ficha.querySelector('img');
+for (const image of images) {
     if(image ==null){
         continue;
     }
