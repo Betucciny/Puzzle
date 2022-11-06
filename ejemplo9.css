@@ -153,7 +153,7 @@ aside{
   max-width: 10em;
 }
 
-.botones--gato button:hover{
+.botones--puzzle button:hover{
   transition: all .4s;
   background-color: #ffffff;
   color: #75003E;

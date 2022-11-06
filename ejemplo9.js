@@ -1,14 +1,11 @@
-const inteligente = async (img) => {
-    await delay(1000);
-    mover(img)
+const inteligente = async () => {
+    visited = [];
+    solved = false;
+    await solve(tablero, 0);
 }
 
-const normal = function(event){
-    mover(event.currentTarget)
-}
-
-
-function mover(imagen){
+function mover(event){
+    const imagen = event.currentTarget
     const lugarO = imagen.parentNode;
     const xPos = parseInt(lugarO.dataset.x);
     const yPos = parseInt(lugarO.dataset.y);
@@ -30,18 +27,20 @@ function mover(imagen){
     lugarN.appendChild(lugarO.querySelector('img'))
     lugarN.querySelector('img').addEventListener('click', mover)
     lugarO.innerHTML='';
-    console.table(tablero)
+}
+
+function isSafe(pos){
+    for(let coor of pos){
+        if(coor < 0 || coor > 2){
+            return false;
+        }
+    }
+    return true
 }
 
 function findEmpty(lugares){
     for(let pos of lugares){
-        let flag = false;
-        for(let coor of pos){
-            if(coor < 0 || coor > 2){
-                flag = true;
-            }
-        }
-        if(flag) continue;
+        if(!isSafe(pos)) continue;
         const x = pos[0];
         const y = pos[1];
         if(tablero[x][y] === 0){
@@ -52,6 +51,86 @@ function findEmpty(lugares){
 }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
+
+const solve = async (actual, depht) =>{
+
+    if(solved === true) return
+
+    if(isIn(visited, actual) || depht > 13){
+        visited.push(actual);
+        return;
+    }
+    console.table(actual);
+    if(isEqual(actual, resuelto)){
+        // console.table(actual);
+        console.log('aqui');
+        solved = true;
+        return;
+    }
+
+    visited.push(actual);
+
+    let coorCero = findCero(actual);
+    let hijos = generarNodos(coorCero[0], coorCero[1], actual);
+
+    for(let hijo of hijos){
+        await delay(20);
+        await solve(hijo, depht+1);
+    }
+}
+
+function isIn(lista, comp){
+    for(let elemento of lista){
+        if(isEqual(elemento, comp)) return true
+    }
+    return false
+}
+
+
+
+function findCero(actual){
+    for(let i=0; i<actual.length; i++){
+        for(let j=0; j<actual[i].length; j++){
+            if(actual[i][j] === 0) return [i, j]
+        }
+    }
+}
+
+function generarNodos(cerox, ceroy, original){
+    const lista = []
+    const next = [
+        [cerox + 1, ceroy],
+        [cerox - 1, ceroy],
+        [cerox, ceroy + 1],
+        [cerox, ceroy - 1],
+    ]
+    for(let pos of next){
+        if(!isSafe(pos)) continue;
+        const x = pos[0];
+        const y = pos[1];
+        const nueva = [];
+        for(let fila of original){
+            nueva.push(fila.slice())
+        }
+        nueva[cerox][ceroy] = nueva[x][y];
+        nueva[x][y] = 0;
+        lista.push(nueva)
+    }
+    return lista;
+}
+
+function isEqual(x, y){
+    for(let i=0; i<x.length; i++){
+        for(let j=0; j<x[i].length; j++){
+            if(x[i][j] !== y[i][j]) return false
+        }
+    }
+    return true;
+}
+
+
+let visited;
+let solved;
 
 const fichas = document.querySelectorAll('#grid div');
 let tablero = [
@@ -66,10 +145,13 @@ const resuelto = [
     [7,8,0]
 ];
 
+const button = document.getElementById('Resolver');
+button.addEventListener('click', inteligente);
+
 for (const ficha of fichas) {
     const image = ficha.querySelector('img');
     if(image ==null){
         continue;
     }
-    image.addEventListener('click', normal);
+    image.addEventListener('click', mover);
 }
