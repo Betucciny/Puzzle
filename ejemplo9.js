@@ -172,7 +172,6 @@ let visited;
 let respuesta;
 let solved;
 
-const fichas = document.querySelectorAll('#grid div');
 const images = document.querySelectorAll('#grid div img');
 let tablero = [
     [1,2,3],
